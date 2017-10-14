@@ -73,6 +73,7 @@ void write2txt1d(const std::string &filename, const int n, const double *x)
         outfile << *x << " ";
         x++;
     }
+    outfile << '\n';
     outfile.close();
 }
 

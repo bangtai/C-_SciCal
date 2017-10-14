@@ -20,21 +20,24 @@ void chol(const matrix_t &A, matrix_t &R)
     //  [2] based on the algorithm, you should have two for-loops
     //      (a) inner one requires a subroutine
     //      (b) outer one requires a subroutine
+
     for (int i = 0; i < A.size; i++) {
 
-        ams562proj1::internal::copy(A.size-i, A.data[i]+i, R.data[i]+i);
+        ams562proj1::internal::copy(A.size - i, A.data[i] + i, R.data[i] + i);
 
     }
 
     for (int k = 0; k < A.size; k++) {
         for (int j = k + 1; j < A.size; j++) {
             double alpha = -1 * R.data[k][j] / R.data[k][k];
-            ams562proj1::internal::axpy(A.size-j, alpha, R.data[k]+j, R.data[j]+j);
+            ams562proj1::internal::axpy(A.size - j, alpha, R.data[k] + j, R.data[j] + j);
+            if (R.data[j][j] <= 0){
+                ams562proj1::internal::myassert(false, "Some entry are non positive");
+            }
         }
         double beta = 1.0/sqrt(R.data[k][k]);
-        ams562proj1::internal::scal(A.size-k, beta, R.data[k]+k);
+        ams562proj1::internal::scal(A.size - k, beta, R.data[k] + k);
     }
-
 
 }
 
